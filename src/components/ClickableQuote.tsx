@@ -38,7 +38,7 @@ export default function ClickableQuote({ initialQuote }: ClickableQuoteProps) {
       </div>
       <div className="-mt-4">
         <blockquote className="text-2xl font-light leading-relaxed text-gray-900 dark:text-gray-100 italic select-none">
-          "{quote}"
+          &ldquo;{quote}&rdquo;
         </blockquote>
       </div>
     </>
