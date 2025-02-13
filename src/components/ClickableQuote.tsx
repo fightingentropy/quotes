@@ -9,16 +9,26 @@ interface ClickableQuoteProps {
 export default function ClickableQuote({ initialQuote }: ClickableQuoteProps) {
   const [quote, setQuote] = useState(initialQuote);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleNewQuote = async () => {
     try {
       setIsLoading(true);
-      const baseUrl = window.location.origin;
-      const response = await fetch(`${baseUrl}/api/quotes`, { cache: 'no-store' });
+      setError(null);
+      const response = await fetch('/api/quotes', { 
+        cache: 'no-store',
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch quote');
+      }
       const data = await response.json();
       setQuote(data.quote);
     } catch (error) {
       console.error('Failed to fetch new quote:', error);
+      setError('Failed to load quote. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -40,6 +50,9 @@ export default function ClickableQuote({ initialQuote }: ClickableQuoteProps) {
         <blockquote className="text-2xl font-light leading-relaxed text-gray-900 dark:text-gray-100 italic select-none">
           &ldquo;{quote}&rdquo;
         </blockquote>
+        {error && (
+          <p className="mt-2 text-red-500">{error}</p>
+        )}
       </div>
     </>
   );
