@@ -1,6 +1,3 @@
-import fs from 'fs';
-import path from 'path';
-
 function getBaseUrl() {
   if (typeof window !== 'undefined') {
     return window.location.origin;
