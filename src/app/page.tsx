@@ -1,12 +1,11 @@
-import { getRandomQuote } from '@/lib/quotes';
 import ClickableQuote from '@/components/ClickableQuote';
 import Image from 'next/image';
 
+const defaultQuote = "The only way to do great work is to love what you do.";
+
 export const revalidate = 0;
 
-export default async function Home() {
-  const quote = await getRandomQuote();
-
+export default function Home() {
   return (
     <main className="min-h-screen flex items-start pt-[40vh] justify-center relative">
       {/* Background image with overlay */}
@@ -21,7 +20,7 @@ export default async function Home() {
         <div className="absolute inset-0 bg-black/60" />
       </div>
       <div className="max-w-3xl mx-auto text-center px-4">
-        <ClickableQuote initialQuote={quote} />
+        <ClickableQuote initialQuote={defaultQuote} />
       </div>
     </main>
   );

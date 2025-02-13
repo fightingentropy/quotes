@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface ClickableQuoteProps {
   initialQuote: string;
@@ -11,7 +11,7 @@ export default function ClickableQuote({ initialQuote }: ClickableQuoteProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleNewQuote = async () => {
+  const fetchNewQuote = async () => {
     try {
       setIsLoading(true);
       setError(null);
@@ -34,10 +34,15 @@ export default function ClickableQuote({ initialQuote }: ClickableQuoteProps) {
     }
   };
 
+  // Fetch a new quote when the component mounts
+  useEffect(() => {
+    fetchNewQuote();
+  }, []);
+
   return (
     <>
       <div 
-        onClick={handleNewQuote} 
+        onClick={fetchNewQuote} 
         className={`fixed top-8 left-1/2 -translate-x-1/2 cursor-pointer transition-all hover:opacity-80 select-none ${
           isLoading ? 'animate-spin' : ''
         }`}
